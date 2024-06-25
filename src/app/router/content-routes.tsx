@@ -1,4 +1,4 @@
-import { RouteObject, createBrowserRouter, redirect } from 'react-router-dom';
+import { RouteObject, redirect } from 'react-router-dom';
 import TodaysPage from '@/pages/TodayPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import CalendarPage from '@/pages/CalendarPage';
