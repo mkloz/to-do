@@ -1,0 +1,20 @@
+.tags {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
+.tags--content {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  min-width: 12rem;
+  max-width: 40rem;
+  width: 100%;
+  flex-grow: 1;
+  h4 {
+    color: var(--text-color-secondary);
+  }
+}

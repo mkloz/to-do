@@ -1,0 +1,76 @@
+.switch-label {
+  --moon-bg-color: #7297fb;
+  --moon-color: #e3eef0;
+  --sun-bg-color: #ffdc78;
+  --sun-color: #9f7f3f;
+  --switcher-bg-color: #f6f7fa;
+
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  background-color: var(--switcher-bg-color);
+  border-radius: 1rem;
+  border: 2px solid var(--bg-color-primary-dark);
+  position: relative;
+  transition: background-color 0.7s;
+  overflow: hidden;
+}
+
+.checkbox {
+  display: none;
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox:checked + .switch-label {
+  --switcher-bg-color: #282c2f;
+}
+
+.checkbox:checked + .switch-label .sun {
+  left: 0;
+  translate: 0% -50%;
+  background-color: var(--moon-bg-color);
+  fill: var(--moon-color);
+  opacity: 0;
+}
+
+.checkbox:not(:checked) + .switch-label .moon {
+  left: 100%;
+  opacity: 0;
+  background-color: var(--sun-bg-color);
+  fill: var(--sun-color);
+  translate: -100% -50%;
+}
+
+.moon,
+.sun {
+  aspect-ratio: 1/1;
+  width: 1.3rem;
+  height: fit-content;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  border-radius: 50%;
+  padding: 0.2rem;
+  transition:
+    left 0.5s,
+    opacity 0.5s,
+    translate 0.5s,
+    background-color 0.5s,
+    fill 0.5s;
+}
+
+.moon {
+  left: 0;
+  fill: var(--moon-color);
+  background-color: var(--moon-bg-color);
+}
+
+.sun {
+  left: 100%;
+  fill: var(--sun-color);
+  translate: -100% -50%;
+  background-color: var(--sun-bg-color);
+}

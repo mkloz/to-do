@@ -1,0 +1,64 @@
+.item {
+  --animation-duration: 0.2s;
+  --animation-easing: ease-in-out;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  transition: gap var(--animation-duration) var(--animation-easing);
+}
+
+.collapsed .icon {
+  transform: rotate(0deg);
+}
+
+.collapsed .content {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.item--is-empty .content {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.item--is-empty {
+  gap: 0;
+}
+
+.item.collapsed {
+  gap: 0;
+}
+
+.item--is-empty .icon {
+  display: none;
+}
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.icon {
+  display: block;
+  margin-left: auto;
+  aspect-ratio: 1/1;
+  width: 1.2rem;
+  flex-shrink: 0;
+  height: fit-content;
+  transform: rotate(-90deg);
+  transition: transform var(--animation-duration) var(--animation-easing);
+}
+
+.content {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows var(--animation-duration) var(--animation-easing),
+    opacity var(--animation-duration) var(--animation-easing);
+
+  > div {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,13 @@
+.content-layout {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.5rem;
+  main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    flex-grow: 1;
+    /* overflow-x: hidden; */
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,6 @@
+.accordion {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0;
+  margin: 0;
+}
