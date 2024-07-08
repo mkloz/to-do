@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 interface ContentEditableProps extends React.HTMLProps<HTMLDivElement> {
-  value: string;
+  value?: string;
   isEditable: boolean;
   onValueChange?: (value: string) => void;
 }
@@ -43,6 +43,8 @@ export default function ContentEditable({
         }
       }}
       ref={ref}
-    />
+    >
+      {props.children}
+    </div>
   );
 }

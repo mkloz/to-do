@@ -29,6 +29,32 @@
   }
 }
 
-.tag--selected {
+.new-tag {
+  opacity: 0;
+  transition: opacity 0.2s;
+  button {
+    color: var(--text-color-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px currentColor dashed;
+    line-height: 1.4;
+    font-weight: 600;
+    font-size: small;
+
+    &:hover {
+      border-style: solid;
+    }
+  }
+}
+.tags:hover .new-tag {
+  opacity: 1;
+}
+.new-tag:first-child {
+  opacity: 1;
+}
+.new .tag--selected {
   border-style: dashed;
 }

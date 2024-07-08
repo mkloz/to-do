@@ -1,8 +1,9 @@
 import { clsx } from 'clsx';
 import { ITag } from '../../../types/projects';
-import { LucideTag } from '../../icons';
+import { BasilAddOutline, LucideTag } from '../../icons';
 import styles from './index.module.css';
 import { Link } from 'react-router-dom';
+import { RandomUtils } from '../../../utils/RandomUtils';
 
 interface TagsProps extends React.HTMLAttributes<HTMLUListElement> {
   tags: ITag[];
@@ -28,6 +29,12 @@ function Tags({ tags, selectedTag, onTagSelect, ...props }: TagsProps) {
           </Link>
         </li>
       ))}
+      <li key={RandomUtils.generateId()} className={clsx(styles['new-tag'])}>
+        <button>
+          <BasilAddOutline />
+          Add Tag
+        </button>
+      </li>
     </ul>
   );
 }

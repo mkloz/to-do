@@ -72,9 +72,16 @@ export class ProjectMockApiService {
     return { ...project, tags };
   }
 
+  async delete(id: number) {
+    const db: IProjectInDB[] = await this.read();
+    const index = db.findIndex((el) => el.id === id);
+
+    db.splice(index, 1);
+    await this.save(db);
+  }
   async create(project: Omit<IProject, 'id'>) {
     const db: IProjectInDB[] = await this.read();
-    const newProject = { ...project, id: ID_SET.lastProjectId, tags: [] };
+    const newProject = { ...project, id: ++ID_SET.lastProjectId, tags: [] };
 
     db.push(newProject);
     await this.save(db);

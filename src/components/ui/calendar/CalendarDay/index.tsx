@@ -128,7 +128,7 @@ function CalendarEvent({ task, color, day }: CalendarEventProps) {
         color,
       }}
     >
-      <HashLink to={`/projects#task-${task.id}`}>
+      <HashLink smooth to={`/projects#task-${task.id}`}>
         <h5>
           {`${formatHour(task.dueDates.start)} -
         ${formatHour(task.dueDates.end)}`}
