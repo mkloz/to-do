@@ -83,6 +83,7 @@ function NavbarProjectsContent() {
         return (
           <li key={el.id}>
             <Link
+              smooth
               to={`/projects#project-${el.id}`}
               className={styles['project-link']}
             >

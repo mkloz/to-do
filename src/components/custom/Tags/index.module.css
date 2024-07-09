@@ -55,6 +55,6 @@
 .new-tag:first-child {
   opacity: 1;
 }
-.new .tag--selected {
+.tag--selected {
   border-style: dashed;
 }

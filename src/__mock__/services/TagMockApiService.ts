@@ -1,6 +1,6 @@
 import { ITag } from '../../types/projects';
 import { LocalStorageUtils } from '../../utils/LocalStorageUtils';
-import { ID_SET } from './db/init';
+import { IDSet } from './db/init';
 
 export class TagMockApiService {
   readonly TAG_KEY = 'tags';
@@ -10,17 +10,24 @@ export class TagMockApiService {
 
     return Array.isArray(res) ? res : [];
   }
-
+  getByName(name: string) {
+    return this.getAll().find((el) => el.name === name);
+  }
   getById(id: number) {
     return this.getAll().find((el) => el.id === id);
   }
 
   create(tag: Omit<ITag, 'id'>) {
     const tags = this.getAll();
-    const newTag = { ...tag, id: ++ID_SET.lastTagId };
+
+    if (this.getByName(tag.name)) throw new Error('Tag already exists');
+
+    const idSet = new IDSet();
+    const newTag = { ...tag, id: ++idSet.lastTagId };
 
     tags.push(newTag);
     this.save(tags);
+    idSet.save();
 
     return newTag;
   }

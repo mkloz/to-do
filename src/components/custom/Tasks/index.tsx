@@ -1,10 +1,5 @@
 import { IProject, ITask } from '@/types/projects';
-import {
-  BasilAddOutline,
-  FlowbiteTrashBinOutline,
-  MaterialSymbolsSave,
-  MynauiEditOne,
-} from '@/components/icons';
+import { BasilAddOutline, FlowbiteTrashBinOutline } from '@/components/icons';
 import styles from './index.module.css';
 import React from 'react';
 import { useBoolean, useToggle } from 'react-use';
@@ -13,8 +8,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { taskMockApiService } from '@/__mock__/services/TaskMockApiService';
 import { RandomUtils } from '@/utils/RandomUtils';
 import clsx from 'clsx';
-import EditButton from '../../buttons/EditButton';
-import DeleteButton from '../../buttons/DeleteButton';
+import EditButton from '../buttons/EditButton';
+import DeleteButton from '../buttons/DeleteButton';
+import { Checkbox } from '../../ui/checkbox';
 
 interface TaskProps {
   task: ITask;
@@ -23,7 +19,6 @@ interface TaskProps {
 }
 
 function Task({ task, onUpdate, onDelete }: TaskProps) {
-  const checkboxId = React.useId();
   const [isDone, toggleDone] = useToggle(task.isDone);
   const [editable, toggleEditable] = useBoolean(false);
   const [content, setContent] = React.useState(task.name);
@@ -39,14 +34,7 @@ function Task({ task, onUpdate, onDelete }: TaskProps) {
 
   return (
     <div className={styles.task} id={`task-${task.id}`}>
-      <input
-        type="checkbox"
-        id={checkboxId}
-        className={styles['checkbox-input']}
-        checked={isDone}
-        onChange={onDone}
-      />
-      <label htmlFor={checkboxId} className={styles['checkmark']}></label>
+      <Checkbox onChange={onDone} checked={isDone} />
       <ContentEditable
         style={{ textDecoration: isDone ? 'line-through' : '' }}
         isEditable={editable}

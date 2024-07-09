@@ -2,7 +2,7 @@ import { IProject, ITag } from '../../types/projects';
 import { tagMockApiService } from './TagMockApiService';
 import dayjs from 'dayjs';
 import { LocalStorageUtils } from '../../utils/LocalStorageUtils';
-import { ID_SET } from './db/init';
+import { IDSet } from './db/init';
 
 interface IProjectInDB extends Omit<IProject, 'tags'> {
   tags: number[];
@@ -18,10 +18,7 @@ export class ProjectMockApiService {
   }
 
   async save(projects: IProjectInDB[]) {
-    console.log(projects);
     LocalStorageUtils.setItem(this.PROJECT_KEY, projects);
-
-    console.log(LocalStorageUtils.getItem(this.PROJECT_KEY));
   }
 
   async getAll() {
@@ -81,10 +78,15 @@ export class ProjectMockApiService {
   }
   async create(project: Omit<IProject, 'id'>) {
     const db: IProjectInDB[] = await this.read();
-    const newProject = { ...project, id: ++ID_SET.lastProjectId, tags: [] };
-
+    const idSet = new IDSet();
+    const newProject = {
+      ...project,
+      id: ++idSet.lastProjectId,
+      tags: project.tags.map((el) => el.id),
+    };
     db.push(newProject);
     await this.save(db);
+    idSet.save();
 
     return newProject;
   }

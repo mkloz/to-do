@@ -17,14 +17,30 @@ function generateDueDates(
     end: end.toISOString(),
   };
 }
-export const ID_SET = {
-  lastProjectId: 15,
-  lastTagId: 10,
-  lastTaskId: 15,
-};
-export let lastProjectId = 15;
-export let lastTagId = 10;
-export let lastTaskId = 15;
+export class IDSet {
+  lastProjectId = 15;
+  lastTagId = 10;
+  lastTaskId = 15;
+
+  constructor() {
+    this.read();
+  }
+
+  read() {
+    const idSet = LocalStorageUtils.getItem('idSet');
+    if (!idSet || typeof idSet !== 'object') {
+      return this;
+    }
+    Object.assign(this, idSet);
+
+    return this;
+  }
+  save() {
+    LocalStorageUtils.setItem('idSet', this);
+
+    return this;
+  }
+}
 
 const seeds = {
   projects: [
@@ -270,4 +286,8 @@ export function initMockDB(seed: boolean = false) {
 
   projectMockApiService.save(db.projects);
   tagMockApiService.save(db.tags);
+
+  const ids = new IDSet();
+
+  ids.save();
 }

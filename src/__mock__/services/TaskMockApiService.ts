@@ -1,6 +1,6 @@
 import { IProject, ITask } from '../../types/projects';
 import { projectMockApiService } from './ProjectMockApiService';
-import { ID_SET } from './db/init';
+import { IDSet } from './db/init';
 
 export class TaskMockApiService {
   async create(task: Omit<ITask, 'id'>, projectId: number) {
@@ -8,10 +8,10 @@ export class TaskMockApiService {
     const db: IProject | null = await projectMockApiService.getById(projectId);
 
     if (!db) throw new Error('Project not found');
-    console.log(db.tasks.length);
-    const newTask = { ...task, id: ++ID_SET.lastTaskId };
+    const idSet = new IDSet();
+    const newTask = { ...task, id: ++idSet.lastTaskId };
     db.tasks.push(newTask);
-    console.log(db.tasks, db.tasks.length);
+    idSet.save();
     await projectMockApiService.update(db);
 
     return newTask;

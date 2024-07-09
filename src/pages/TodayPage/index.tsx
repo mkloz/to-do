@@ -37,7 +37,7 @@ function TodaysPage() {
       <div className={styles.todays}>
         <div className={styles['todays--content']}>
           <div>
-            <h1>Good {TimeUtils.getDayTime()}, Mykhailo!👋</h1>
+            <h1>Good {TimeUtils.getDayTime()}, User!👋</h1>
             <h4>It's {dayjs().format('dddd, MMM YY')}</h4>
           </div>
           {projects.data.length === 0 ? (

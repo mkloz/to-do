@@ -4,14 +4,27 @@ import { BasilAddOutline, LucideTag } from '../../icons';
 import styles from './index.module.css';
 import { Link } from 'react-router-dom';
 import { RandomUtils } from '../../../utils/RandomUtils';
+import { FC, useMemo, useRef } from 'react';
+import Popover from '../../ui/popover';
+import { useBoolean } from 'react-use';
 
 interface TagsProps extends React.HTMLAttributes<HTMLUListElement> {
   tags: ITag[];
   selectedTag?: ITag | null;
   onTagSelect?: (tag: ITag) => void;
+  addTagForm?: FC;
 }
 
-function Tags({ tags, selectedTag, onTagSelect, ...props }: TagsProps) {
+function Tags({
+  tags,
+  selectedTag,
+  onTagSelect,
+  addTagForm: AddTagForm,
+  ...props
+}: TagsProps) {
+  const elementRef = useRef<HTMLLIElement>(null);
+  const [isPopoverOpen, toggle] = useBoolean(false);
+
   return (
     <ul {...props} className={clsx(styles.tags, props.className)}>
       {tags.map((tag) => (
@@ -29,12 +42,23 @@ function Tags({ tags, selectedTag, onTagSelect, ...props }: TagsProps) {
           </Link>
         </li>
       ))}
-      <li key={RandomUtils.generateId()} className={clsx(styles['new-tag'])}>
-        <button>
-          <BasilAddOutline />
-          Add Tag
-        </button>
-      </li>
+      {AddTagForm && (
+        <li
+          ref={elementRef}
+          key={useMemo(() => RandomUtils.generateId(), [])}
+          className={clsx(styles['new-tag'])}
+          style={{
+            opacity: isPopoverOpen ? 1 : undefined,
+          }}
+        >
+          <Popover isOpen={isPopoverOpen} popoverContent={<AddTagForm />}>
+            <button onClick={toggle}>
+              <BasilAddOutline />
+              Add Tag
+            </button>
+          </Popover>
+        </li>
+      )}
     </ul>
   );
 }

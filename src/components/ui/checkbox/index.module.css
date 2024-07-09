@@ -1,0 +1,40 @@
+.checkbox-input {
+  display: none;
+
+  &:not(:checked) + .checkmark:hover {
+    background-color: var(--bg-color-primary-dark);
+  }
+
+  &:checked + .checkmark {
+    background-color: color-mix(
+      in srgb,
+      currentColor 20%,
+      var(--bg-color-primary)
+    );
+    border-color: var(--color-green);
+    color: var(--color-green);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'%3E%3Cpath fill='%2312b05f' d='m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z'/%3E%3C/svg%3E");
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    &:hover {
+      border: 2px dashed currentColor;
+    }
+  }
+}
+
+.checkmark {
+  content: '';
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  border: 2px solid var(--bg-color-primary-dark);
+  border-radius: 0.4rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bg-color-primary-dark);
+  }
+}

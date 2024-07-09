@@ -1,10 +1,5 @@
 import { IProject } from '@/types/projects';
-import {
-  BasilAddOutline,
-  CiCircle,
-  MynauiEditOne,
-  UilStar,
-} from '@/components/icons';
+import { BasilAddOutline, CiCircle, UilStar } from '@/components/icons';
 import styles from './index.module.css';
 import { useBoolean } from 'react-use';
 import {
@@ -19,7 +14,7 @@ import { HashLink } from 'react-router-hash-link';
 import ContentEditable from '../../forms/ContentEditable';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { projectMockApiService } from '../../../__mock__/services/ProjectMockApiService';
-import Tasks from './Tasks';
+import Tasks from '../Tasks';
 import EditButton from '../buttons/EditButton';
 import { useState } from 'react';
 import DeleteButton from '../buttons/DeleteButton';
@@ -83,6 +78,7 @@ function Project({ project }: { project: IProject }) {
           </button>
           {!editable ? (
             <HashLink
+              smooth
               to={`/projects#project-${project.id}`}
               className={styles['project-name']}
             >
@@ -113,7 +109,7 @@ function Project({ project }: { project: IProject }) {
     </AccordionItem>
   );
 }
-function generateEmptyProject(): IProject {
+export function generateEmptyProject(): IProject {
   return {
     id: RandomUtils.getRandomInt(1, Number.MAX_SAFE_INTEGER),
     name: 'New project',
@@ -124,10 +120,19 @@ function generateEmptyProject(): IProject {
     tags: [],
   };
 }
-export function Projects({ projects }: { projects: IProject[] }) {
+interface ProjectsProps {
+  projects: IProject[];
+  newTemplate?: Omit<IProject, 'id'>;
+}
+
+export function Projects({
+  projects,
+  newTemplate = generateEmptyProject(),
+}: ProjectsProps) {
   const queryClient = useQueryClient();
   const createProject = useMutation({
-    mutationFn: (project: IProject) => projectMockApiService.create(project),
+    mutationFn: (param: Omit<IProject, 'id'>) =>
+      projectMockApiService.create(param),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
@@ -141,7 +146,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
         key={RandomUtils.generateId()}
         className={clsx(styles['new-project'])}
         onClick={() => {
-          createProject.mutateAsync(generateEmptyProject());
+          createProject.mutateAsync(newTemplate);
         }}
       >
         <BasilAddOutline />
