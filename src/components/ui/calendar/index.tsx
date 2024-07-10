@@ -9,6 +9,9 @@ import { useCounter } from 'react-use';
 import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import CalendarDay from './CalendarDay';
+import Loading from '../../async/loadings/Loading';
+import { ErrorBoundary } from 'react-error-boundary';
+import CantLoadError from '../../async/errors/CantLoadError';
 
 const DAYS_RANGE = 2;
 
@@ -25,7 +28,7 @@ function Calendar({ startDate, range = 0, ...rest }: CalendarProps) {
   if (range < 0) {
     range = 0;
   }
-  const startDateDay = useMemo(() => dayjs(startDate), []);
+  const startDateDay = useMemo(() => dayjs(startDate).startOf('day'), []);
   const [current, { inc, dec }] = useCounter(0, DAYS_RANGE, -DAYS_RANGE);
   const date = startDateDay.add(current, 'day').toDate();
 
@@ -46,12 +49,14 @@ function Calendar({ startDate, range = 0, ...rest }: CalendarProps) {
               const day = dayjs(date).add(i - range, 'day');
 
               return (
-                <div key={i}>
-                  {!!range && <CalendarDate date={day.toDate()} />}
-                  <Suspense fallback={null}>
-                    <CalendarDay day={day.toDate()} />
-                  </Suspense>
-                </div>
+                <Suspense fallback={<Loading />} key={i}>
+                  <ErrorBoundary fallback={<CantLoadError />}>
+                    <div>
+                      {!!range && <CalendarDate date={day.toDate()} />}
+                      <CalendarDay day={day.toDate()} />
+                    </div>
+                  </ErrorBoundary>
+                </Suspense>
               );
             })}
           </div>

@@ -20,4 +20,7 @@ export class TimeUtils {
     }
     return DayTime.EVENING;
   }
+  static timeout(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 }

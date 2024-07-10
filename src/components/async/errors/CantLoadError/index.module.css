@@ -1,0 +1,24 @@
+.error {
+  display: flex;
+  margin: auto;
+  color: var(--text-color-disabled);
+  width: 100%;
+
+  > div {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin: auto;
+    justify-content: center;
+    gap: 1rem;
+  }
+  h4 {
+    margin: 0;
+    padding: 0;
+  }
+  svg {
+    height: 100%;
+    width: 2rem;
+    height: 2rem;
+  }
+}

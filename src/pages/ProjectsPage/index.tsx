@@ -3,6 +3,7 @@ import Projects from '../../components/custom/Projects';
 import { TipUtils } from '../../utils/TipUtils';
 import styles from './index.module.css';
 import { projectMockApiService } from '../../__mock__/services/ProjectMockApiService';
+import Fallback from '../../components/async/fallbacks/Fallback';
 
 function ProjectsPage() {
   const projects = useQuery({
@@ -11,9 +12,6 @@ function ProjectsPage() {
   });
   const [tip] = TipUtils.useRandomTip();
 
-  if (projects.isLoading) return <div>Loading...</div>;
-  if (projects.isError) return <div>Error: {projects.error.message}</div>;
-
   return (
     <div className={styles.projects}>
       <div className={styles['projects--content']}>
@@ -21,7 +19,9 @@ function ProjectsPage() {
           <h1>📁 All Projects</h1>
           <h4>💡{tip}💡</h4>
         </div>
-        <Projects projects={projects.data || []} />
+        <Fallback isError={projects.isError} isLoading={projects.isLoading}>
+          <Projects projects={projects.data || []} />
+        </Fallback>
       </div>
     </div>
   );

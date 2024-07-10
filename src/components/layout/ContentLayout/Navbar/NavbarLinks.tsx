@@ -20,10 +20,11 @@ import {
   AccordionItemHeaderNonInteractive,
 } from '../../../ui/accordion';
 import { Color, ColorUtils } from '@/utils/ColorUtils';
-import Tags from '../../../custom/Tags';
 import { useQuery } from '@tanstack/react-query';
 import { projectMockApiService } from '../../../../__mock__/services/ProjectMockApiService';
 import { tagMockApiService } from '../../../../__mock__/services/TagMockApiService';
+import TagsList from '../../../custom/TagsList';
+import Fallback from '../../../async/fallbacks/Fallback';
 
 enum NavBarLinkName {
   TODAY = 'Today',
@@ -70,42 +71,40 @@ function NavbarProjectsContent() {
   const colorGenerator = ColorUtils.getColorGenerator();
   const projects = useQuery({
     queryKey: ['projects'],
-    initialData: [],
     queryFn: () => projectMockApiService.getAll(),
   });
 
-  if (projects.isLoading) return <div>Loading...</div>;
-  if (projects.isError) return <div>Error: {projects.error.message}</div>;
-
   return (
     <ul className={styles['nav-item-projects-content']}>
-      {projects.data.map((el) => {
-        return (
-          <li key={el.id}>
-            <Link
-              smooth
-              to={`/projects#project-${el.id}`}
-              className={styles['project-link']}
-            >
-              {el.isImportant ? (
-                <UilStar
-                  style={{
-                    color: colorGenerator.next().value || Color.GREEN,
-                  }}
-                />
-              ) : (
-                <CiCircle
-                  style={{
-                    color: colorGenerator.next().value || Color.GREEN,
-                  }}
-                />
-              )}
-              <h5>{el.name} </h5>
-              <span>{el.tasks.length}</span>
-            </Link>
-          </li>
-        );
-      })}
+      <Fallback isError={projects.isError} isLoading={projects.isLoading}>
+        {projects.data?.map((el) => {
+          return (
+            <li key={el.id}>
+              <Link
+                smooth
+                to={`/projects#project-${el.id}`}
+                className={styles['project-link']}
+              >
+                {el.isImportant ? (
+                  <UilStar
+                    style={{
+                      color: colorGenerator.next().value || Color.GREEN,
+                    }}
+                  />
+                ) : (
+                  <CiCircle
+                    style={{
+                      color: colorGenerator.next().value || Color.GREEN,
+                    }}
+                  />
+                )}
+                <h5>{el.name} </h5>
+                <span>{el.tasks.length}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </Fallback>
     </ul>
   );
 }
@@ -113,14 +112,17 @@ function NavbarProjectsContent() {
 function NavbarTagsContent() {
   const tags = useQuery({
     queryKey: ['tags'],
-    initialData: [],
     queryFn: () => tagMockApiService.getAll(),
   });
 
-  if (tags.isLoading) return <div>Loading...</div>;
-  if (tags.isError) return <div>Error</div>;
-
-  return <Tags tags={tags.data} className={styles['nav-item-tags-content']} />;
+  return (
+    <Fallback isError={tags.isError} isLoading={tags.isLoading}>
+      <TagsList
+        tags={tags.data || []}
+        className={styles['nav-item-tags-content']}
+      />
+    </Fallback>
+  );
 }
 
 function NavbarItem({ name, icon: Icon, link }: NavBarLink) {

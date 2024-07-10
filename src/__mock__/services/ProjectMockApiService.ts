@@ -3,6 +3,7 @@ import { tagMockApiService } from './TagMockApiService';
 import dayjs from 'dayjs';
 import { LocalStorageUtils } from '../../utils/LocalStorageUtils';
 import { IDSet } from './db/init';
+import { TimeUtils } from '../../utils/TimeUtils';
 
 interface IProjectInDB extends Omit<IProject, 'tags'> {
   tags: number[];
@@ -12,6 +13,7 @@ export class ProjectMockApiService {
   readonly PROJECT_KEY = 'projects';
 
   async read(): Promise<IProjectInDB[]> {
+    await TimeUtils.timeout(20);
     const res = LocalStorageUtils.getItem(this.PROJECT_KEY);
 
     return Array.isArray(res) ? res : [];
@@ -29,7 +31,7 @@ export class ProjectMockApiService {
       const tags: ITag[] = [];
 
       for (const tagId of project.tags) {
-        const tag = tagMockApiService.getById(tagId);
+        const tag = await tagMockApiService.getById(tagId);
 
         if (tag) tags.push(tag);
       }
@@ -61,7 +63,7 @@ export class ProjectMockApiService {
     const tags: ITag[] = [];
 
     for (const tagId of project.tags) {
-      const tag = tagMockApiService.getById(tagId);
+      const tag = await tagMockApiService.getById(tagId);
 
       if (tag) tags.push(tag);
     }
@@ -127,6 +129,27 @@ export class ProjectMockApiService {
 
     db[index].isImportant = !db[index].isImportant;
     await this.save(db);
+
+    return db[index].isImportant;
+  }
+  async addTag(projectId: number, tag: ITag) {
+    const db: IProjectInDB[] = await this.read();
+    const index = db.findIndex((el) => el.id === projectId);
+
+    if (db[index].tags.includes(tag.id)) return;
+
+    db[index].tags.push(tag.id);
+    await this.save(db);
+  }
+
+  async removeTag(projectId: number, tag: ITag) {
+    const db: IProjectInDB[] = await this.read();
+    const index = db.findIndex((el) => el.id === projectId);
+    const tagIndex = db[index].tags.findIndex((el) => el === tag.id);
+    db[index].tags.splice(tagIndex, 1);
+    await this.save(db);
+
+    return tag;
   }
 }
 

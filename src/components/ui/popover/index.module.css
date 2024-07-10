@@ -3,7 +3,7 @@
   --popover-border: 2px solid var(--bg-color-primary-dark, inherit);
   display: flex;
   border-radius: 0.5rem;
-  padding: 0.25rem;
+  padding: 0.5rem;
   border: var(--popover-border);
   background-color: var(--popover-background);
 }

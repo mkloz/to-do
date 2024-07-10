@@ -28,3 +28,6 @@ export * from './MaterialSymbolsSave';
 export * from './FlowbiteTrashBinOutline';
 export * from './BasilAddOutline';
 export * from './FluentCompassNorthwest16Filled';
+export * from './MaterialSymbolsClose';
+export * from './MdiClockPlusOutline';
+export * from './OouiReload';

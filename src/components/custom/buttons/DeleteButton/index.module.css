@@ -1,4 +1,6 @@
 .btn {
+  line-height: 0;
+
   &:hover {
     color: var(--color-red);
   }

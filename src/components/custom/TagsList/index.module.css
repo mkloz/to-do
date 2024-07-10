@@ -8,6 +8,7 @@
   padding: 0;
 }
 .tag {
+  display: flex;
   border-radius: 0.5rem;
   border: 2px currentColor double;
   background-color: color-mix(
@@ -21,7 +22,7 @@
   &:hover {
     border-style: dashed;
   }
-  a {
+  > * {
     display: flex;
     align-items: center;
     padding: 0.25rem 0.5rem;

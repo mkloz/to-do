@@ -1,7 +1,12 @@
 import { create } from 'zustand';
-import { AlertType } from '@/types/ui';
 import { RandomUtils } from '@/utils/RandomUtils';
 
+export enum AlertType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info',
+}
 export class Alert {
   id: string;
   message: string;

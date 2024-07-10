@@ -8,19 +8,11 @@ import { projectMockApiService } from '../../__mock__/services/ProjectMockApiSer
 import { FluentCompassNorthwest16Filled } from '../../components/icons';
 import { Link } from 'react-router-dom';
 import { TimeUtils } from '../../utils/TimeUtils';
+import { generateEmptyTask } from '../../components/custom/Tasks';
+import Fallback from '../../components/async/fallbacks/Fallback';
 
-function TodaysPage() {
-  const b = useBreakpoint();
-  const projects = useQuery({
-    queryKey: ['projects', dayjs().startOf('day').toISOString()],
-    initialData: [],
-    queryFn: () => projectMockApiService.getTodaysProjects(),
-  });
-
-  if (projects.isLoading) return <div>Loading...</div>;
-  if (projects.isError) return <div>Error</div>;
-
-  const NoProjectsFallback = () => (
+function NoProjectsFallback() {
+  return (
     <div className={styles['no-projects-fallback']}>
       <div>
         <FluentCompassNorthwest16Filled />
@@ -31,6 +23,22 @@ function TodaysPage() {
       </div>
     </div>
   );
+}
+
+function TodaysPage() {
+  const b = useBreakpoint();
+  const projects = useQuery({
+    queryKey: ['projects', 'today'],
+    queryFn: () => projectMockApiService.getTodaysProjects(),
+  });
+
+  const newTaskTemplate = {
+    ...generateEmptyTask(),
+    dueDates: {
+      start: dayjs().toISOString(),
+      end: dayjs().add(1, 'hour').toISOString(),
+    },
+  };
 
   return (
     <>
@@ -40,11 +48,16 @@ function TodaysPage() {
             <h1>Good {TimeUtils.getDayTime()}, User!👋</h1>
             <h4>It's {dayjs().format('dddd, MMM YY')}</h4>
           </div>
-          {projects.data.length === 0 ? (
-            <NoProjectsFallback />
-          ) : (
-            <Projects projects={projects.data} />
-          )}
+          <Fallback isError={projects.isError} isLoading={projects.isLoading}>
+            {projects.data?.length === 0 ? (
+              <NoProjectsFallback />
+            ) : (
+              <Projects
+                projects={projects.data || []}
+                newTaskTemplate={newTaskTemplate}
+              />
+            )}
+          </Fallback>
         </div>
       </div>
       <Calendar

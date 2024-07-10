@@ -6,15 +6,11 @@ import {
 } from 'react-tiny-popover';
 import styles from './index.module.css';
 
-interface TooltipProps extends Omit<PopoverProps, 'content'> {
-  popoverContent: ReactElement;
+export interface TooltipProps extends Omit<PopoverProps, 'content'> {
+  content: ReactElement;
 }
 
-export default function Popover({
-  children,
-  popoverContent,
-  ...props
-}: TooltipProps) {
+export default function Popover({ children, content, ...props }: TooltipProps) {
   return (
     <PopoverContainer
       positions={['top', 'bottom', 'right', 'left']}
@@ -31,7 +27,7 @@ export default function Popover({
           arrowSize={7}
           arrowClassName={styles.arrow}
         >
-          <div className={styles.popover}>{popoverContent}</div>
+          <div className={styles.popover}>{content}</div>
         </ArrowContainer>
       )}
     >

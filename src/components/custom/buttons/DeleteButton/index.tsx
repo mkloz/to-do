@@ -16,7 +16,6 @@ export default function DeleteButton({
       {...props}
       className={clsx(styles.btn, props.className)}
       onClick={() => onDelete?.()}
-      title="Delete"
     >
       <FlowbiteTrashBinOutline />
     </button>

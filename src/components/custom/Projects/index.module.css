@@ -28,6 +28,7 @@
   }
 }
 .important-button > svg {
+  line-height: 0;
   aspect-ratio: 1/1;
   width: 1.2rem;
   height: fit-content;
@@ -37,7 +38,9 @@
     scale: 1.5;
   }
 }
-
+.important-button {
+  line-height: 0;
+}
 .project-name {
   font-weight: 600;
   font-size: 1.2rem;

@@ -1,0 +1,53 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  font-weight: 600;
+  > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    max-width: 10rem;
+    gap: 1rem;
+    input {
+      width: 100%;
+      padding: 0.25rem;
+      color: var(--text-color-secondary);
+      font-weight: 600;
+      &::placeholder {
+        opacity: 0.6;
+      }
+      border-radius: 0.5rem;
+    }
+    > span {
+      text-align: center;
+    }
+    > button {
+      width: 100%;
+      border-radius: 0.5rem;
+      padding: 0.25rem;
+
+      &[type='submit'] {
+        background-color: var(--bg-color-primary-dark);
+      }
+      &[type='button'] {
+        border: 2px solid var(--bg-color-primary-dark);
+        &:hover {
+          background-color: var(--bg-color-primary-dark);
+        }
+      }
+    }
+  }
+}
+
+.errors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-color-error, red);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+}

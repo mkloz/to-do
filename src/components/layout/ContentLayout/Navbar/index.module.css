@@ -75,7 +75,19 @@
 
 .arrow {
   margin: 0.5rem;
+  line-height: 0;
   rotate: 180deg;
+}
+
+.reload {
+  margin-left: auto;
+  line-height: 0;
+  transition: rotate 0.3s;
+
+  &:hover {
+    rotate: 360deg;
+  }
+  margin-bottom: 0;
 }
 
 .search {

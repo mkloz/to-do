@@ -1,0 +1,72 @@
+.tags {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+.tag {
+  display: flex;
+  border-radius: 0.5rem;
+  border: 2px currentColor double;
+  background-color: color-mix(
+    in srgb,
+    currentColor 20%,
+    var(--bg-color-primary)
+  );
+  font-weight: 600;
+  font-size: small;
+
+  &:hover {
+    border-style: dashed;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    gap: 0.25rem;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    gap: 0.25rem;
+
+    &:hover > svg {
+      transition: scale 0.2s;
+      scale: 1.5;
+    }
+  }
+}
+
+.new-tag {
+  opacity: 0;
+  transition: opacity 0.2s;
+  button {
+    color: var(--text-color-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px currentColor dashed;
+    line-height: 1.4;
+    font-weight: 600;
+    font-size: small;
+
+    &:hover {
+      border-style: solid;
+    }
+  }
+}
+.tags:hover .new-tag {
+  opacity: 1;
+}
+.new-tag:first-child {
+  opacity: 1;
+}
+.tag--selected {
+  border-style: dashed;
+}

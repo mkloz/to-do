@@ -7,10 +7,12 @@ import {
   Logo,
   MaterialSymbolsDoubleArrowRounded,
   MaterialSymbolsSearch,
+  OouiReload,
 } from '@/components/icons';
 import { Breakpoint, useBreakpoint } from '../../../../hooks/useBreakpoint';
 import NavbarLinks from './NavbarLinks';
 import { useBoolean } from 'react-use';
+import { LocalStorageUtils } from '../../../../utils/LocalStorageUtils';
 
 function Search() {
   return (
@@ -28,7 +30,6 @@ function NavBar() {
   const [isCollapsed, toggleCollapsed] = useBoolean(
     b === Breakpoint.MOBILE || b === Breakpoint.TABLET,
   );
-
   React.useEffect(() => {
     toggleCollapsed(b === Breakpoint.MOBILE || b === Breakpoint.TABLET);
   }, [b]);
@@ -45,12 +46,17 @@ function NavBar() {
           <Link to={'/'}>
             <Logo />
           </Link>
-          <button onClick={() => toggleCollapsed()}>
-            <MaterialSymbolsDoubleArrowRounded
-              className={styles.arrow}
-              width="1.3rem"
-              height="1.3rem"
-            />
+          <button
+            className={styles.reload}
+            onClick={() => {
+              LocalStorageUtils.clear();
+              window.location.reload();
+            }}
+          >
+            <OouiReload width="1.3rem" height="1.3rem" />
+          </button>
+          <button onClick={() => toggleCollapsed()} className={styles.arrow}>
+            <MaterialSymbolsDoubleArrowRounded width="1.3rem" height="1.3rem" />
           </button>
         </div>
         <Search />
