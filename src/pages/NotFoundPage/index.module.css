@@ -1,0 +1,43 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+    gap: 1rem;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      padding: 1rem;
+      height: 100%;
+      border: 3px solid var(--text-color-primary);
+      color: var(--text-color-primary);
+    }
+    > div {
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 0;
+        color: var(--text-color-secondary);
+      }
+
+      h5 {
+        margin: 0;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: var(--text-color-secondary);
+        cursor: pointer;
+        &:hover {
+          color: var(--text-color-primary);
+        }
+      }
+    }
+  }
+}
