@@ -24,7 +24,7 @@
   > .btns {
     display: flex;
     gap: 0.5rem;
-    flex: 1 1 20%;
+    flex: 1 1 fit-content;
     width: min-content;
     align-items: center;
     justify-content: flex-end;
