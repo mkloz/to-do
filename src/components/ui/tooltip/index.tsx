@@ -18,6 +18,7 @@ export default function Tooltip({ children, tip, ...props }: ToltipProps) {
       <span
         onMouseEnter={() => toggle(true)}
         onMouseLeave={() => toggle(false)}
+        onBlur={() => toggle(false)}
         className={styles.trigger}
       >
         {children}

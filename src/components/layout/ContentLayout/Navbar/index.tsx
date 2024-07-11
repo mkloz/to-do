@@ -11,7 +11,6 @@ import {
 } from '@/components/icons';
 import { Breakpoint, useBreakpoint } from '../../../../hooks/useBreakpoint';
 import NavbarLinks from './NavbarLinks';
-import { useBoolean } from 'react-use';
 import { LocalStorageUtils } from '../../../../utils/LocalStorageUtils';
 
 function Search() {
@@ -25,21 +24,23 @@ function Search() {
   );
 }
 
-function NavBar() {
+function NavBar({
+  isCollapsed,
+  toggleCollapsed,
+}: {
+  isCollapsed: boolean;
+  toggleCollapsed?: (c?: boolean) => void;
+}) {
   const b = useBreakpoint();
-  const [isCollapsed, toggleCollapsed] = useBoolean(
-    b === Breakpoint.MOBILE || b === Breakpoint.TABLET,
-  );
-  React.useEffect(() => {
-    toggleCollapsed(b === Breakpoint.MOBILE || b === Breakpoint.TABLET);
-  }, [b]);
-
   return (
     <aside
       className={clsx({
         [styles.sidebar]: true,
         [styles['sidebar--hidden']]: isCollapsed,
       })}
+      style={{
+        width: !isCollapsed && b === Breakpoint.MOBILE ? '100%' : undefined,
+      }}
     >
       <nav className={styles.navbar}>
         <div className={styles['top-bar']}>
@@ -55,13 +56,13 @@ function NavBar() {
           >
             <OouiReload width="1.3rem" height="1.3rem" />
           </button>
-          <button onClick={() => toggleCollapsed()} className={styles.arrow}>
+          <button onClick={() => toggleCollapsed?.()} className={styles.arrow}>
             <MaterialSymbolsDoubleArrowRounded width="1.3rem" height="1.3rem" />
           </button>
         </div>
         <Search />
         {isCollapsed && (
-          <button onClick={() => toggleCollapsed()}>
+          <button onClick={() => toggleCollapsed?.()}>
             <MaterialSymbolsDoubleArrowRounded width="1.3rem" height="1.3rem" />
           </button>
         )}

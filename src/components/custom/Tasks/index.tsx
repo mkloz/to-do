@@ -66,58 +66,61 @@ function Task({ task, onUpdate, onDelete }: TaskProps) {
         style={{ textDecoration: isDone ? 'line-through' : '' }}
         isEditable={editable}
         value={task.name}
+        className={styles['task-content']}
         onValueChange={setContent}
         onBlur={onSaveChanges}
         onDoubleClick={toggleEditable}
         placeholder="Task description"
       />
-      <Tooltip tip={'Edit task'}>
-        <EditButton
-          editable={editable}
-          toggleEditable={toggleEditable}
-          onSaveChanges={onSaveChanges}
-          className={styles['update-task']}
-          title="Edit task"
-        />
-      </Tooltip>
-      <Tooltip tip={'Delete task'}>
-        <DeleteButton
-          className={styles['delete-task']}
-          onDelete={() => onDelete?.(task)}
-        >
-          <FlowbiteTrashBinOutline />
-        </DeleteButton>
-      </Tooltip>
-      <Tooltip
-        tip={
-          task.dueDates
-            ? dayjs(task.dueDates?.start).fromNow()
-            : 'Add due dates'
-        }
-      >
-        <Popover
-          isOpen={datesIsOpen}
-          onClickOutside={toggleDatesIsOpen}
-          content={
-            <CreateDueDatesForm task={task} onSubmitted={toggleDatesIsOpen} />
+      <div className={styles['btns']}>
+        <Tooltip tip={'Edit task'}>
+          <EditButton
+            editable={editable}
+            toggleEditable={toggleEditable}
+            onSaveChanges={onSaveChanges}
+            className={styles['update-task']}
+            title="Edit task"
+          />
+        </Tooltip>
+        <Tooltip tip={'Delete task'}>
+          <DeleteButton
+            className={styles['delete-task']}
+            onDelete={() => onDelete?.(task)}
+          >
+            <FlowbiteTrashBinOutline />
+          </DeleteButton>
+        </Tooltip>
+        <Tooltip
+          tip={
+            task.dueDates
+              ? dayjs(task.dueDates?.start).fromNow()
+              : 'Add due dates'
           }
         >
-          {
-            <button
-              onClick={toggleDatesIsOpen}
-              style={{
-                color: getColorWarning(task),
-              }}
-            >
-              {task.dueDates ? (
-                eventDuration.humanize()
-              ) : (
-                <MdiClockPlusOutline />
-              )}
-            </button>
-          }
-        </Popover>
-      </Tooltip>
+          <Popover
+            isOpen={datesIsOpen}
+            onClickOutside={toggleDatesIsOpen}
+            content={
+              <CreateDueDatesForm task={task} onSubmitted={toggleDatesIsOpen} />
+            }
+          >
+            {
+              <button
+                onClick={toggleDatesIsOpen}
+                style={{
+                  color: getColorWarning(task),
+                }}
+              >
+                {task.dueDates ? (
+                  eventDuration.humanize()
+                ) : (
+                  <MdiClockPlusOutline />
+                )}
+              </button>
+            }
+          </Popover>
+        </Tooltip>
+      </div>
     </div>
   );
 }

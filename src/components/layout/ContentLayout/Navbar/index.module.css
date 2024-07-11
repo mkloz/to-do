@@ -2,18 +2,23 @@
   display: flex;
   position: sticky;
   top: 0;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   height: 100dvh;
   flex-shrink: 0;
   padding: 0.5rem;
   font-weight: 400;
+  width: 20rem;
+  box-sizing: border-box;
+  transition: width 0.3s;
 }
+
 .navbar {
   display: flex;
-  width: 20rem;
   height: 100%;
   gap: 0.5rem;
+  width: 100%;
+  flex-grow: 0;
   justify-content: start;
   flex-flow: column nowrap;
   align-items: center;
@@ -25,9 +30,8 @@
 }
 
 .sidebar--hidden {
-  .navbar {
-    width: 3.2rem;
-  }
+  width: 4.2rem;
+
   .top-bar {
     margin: 0;
   }
@@ -35,6 +39,9 @@
     display: none;
   }
   .arrow {
+    display: none;
+  }
+  .reload {
     display: none;
   }
   .nav-item-header button {
